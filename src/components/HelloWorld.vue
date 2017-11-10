@@ -26,15 +26,25 @@
             }
         },
         mounted() {
-            axios({ method: "GET", "url": "https://httpbin.org/ip" }).then(result => {
-                this.ip = result.data.origin;
+            // axios({ method: "GET", "url": "https://httpbin.org/ip" }).then(result => {
+            //     this.ip = result.data.origin;
+            // }, error => {
+            //     console.error(error);
+            // });
+            this.$http.get("https://httpbin.org/ip").then(result => {
+                this.ip = result.body.origin;
             }, error => {
                 console.error(error);
             });
         },
         methods: {
             sendData() {
-                axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+                //axios({ method: "POST", "url": "https://httpbin.org/post", "data": this.input, "headers": { "content-type": "application/json" } }).then(result => {
+                //    this.response = result.data;
+                //}, error => {
+                //    console.error(error);
+                //});
+                this.$http.post("https://httpbin.org/post", this.input, { headers: { "content-type": "application/json" } }).then(result => {
                     this.response = result.data;
                 }, error => {
                     console.error(error);
